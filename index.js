@@ -1,8 +1,8 @@
-// Packages needed for this application
+// Packages needed for this app
 const fs = require('fs');
 const inquirer = require('inquirer');
 const path = require('path');
-const generateMarkdown = require('./utils/generateMarkdown');
+const createReadme = require('./utils/createReadme.js');
 
 // Array of questions for user input
 const questions = [
@@ -37,18 +37,35 @@ const questions = [
       name: 'usage'
     },
     {
-      type: 'rawlist',
+      type: 'list',
       message: 'What type of license should this project have?',
-      choices: ['GNU AGPLv3', 'GNU GPLv3', 'GNU LGPLv3', 'Mozilla Public License 2.0', 'Apache License 2.0', 'MIT License', 'Boost Software License 1.0', 'None'],
+      choices: ['GNU_AGPLv3', 'GNU_GPLv3', 'GNU_LGPLv3', 'Mozilla_Public_License_2.0', 'Apache_License_2.0', 'MIT_License', 'Boost_Software_License_1.0', 'None'],
       name: 'license'
+    },
+    {
+      type: 'confirm',
+      message: 'Would you like to give users the opportunity to contribute to this project?',
+      name: 'contribute'
+    },
+    {
+      type: 'input',
+      message: 'Provide instructions for the user to run tests on this application.',
+      name: 'test'
     }
 ];
 
-// TODO: Create a function to write README file
-// function writeToFile(fileName, data) {}
+// Function to write README file
+function writeReadme(fileName, userInput) {
+  return fs.writeFileSync(path.join(process.cwd(), fileName), userInput);
+}
 
-// TODO: Create a function to initialize app
-// function init() {}
+// Function to start the app
+function start() {
+  inquirer.prompt(questions).then((responses) => {
+    console.log('Your quality README file is being generated...');
+    writeReadme('README.md', createReadme({ ...responses }));
+  });
+}
 
-// Function call to initialize app
-// init();
+// Call function to start the app
+start();
