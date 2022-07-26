@@ -25,7 +25,7 @@ function contributeSection(contribute) {
     };
 }
 
-// TODO: Create a function to generate markdown for README
+// Function to generate markdown for README
 function createReadme(input) {
   return `# ${input.title}
   ${createBadge(input.license)}
