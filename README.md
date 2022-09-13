@@ -1,4 +1,4 @@
-# module9-readme-generator-challenge
+# README-Generator
 
 ## Description
 
